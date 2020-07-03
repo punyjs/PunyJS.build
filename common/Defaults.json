@@ -1,4 +1,5 @@
-{    "fileExtEncodingMap": {
+{
+    "fileExtEncodingMap": {
         "$default": "utf8"
         , "jpg": "binary"
         , "png": "binary"
@@ -33,4 +34,5 @@
             "*manifest.json"
             , "*dtree.json"
         ]
-    }}
+    }
+}
