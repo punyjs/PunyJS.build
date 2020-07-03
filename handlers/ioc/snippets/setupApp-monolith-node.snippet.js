@@ -16,6 +16,7 @@ function setupApp(app) {
                     , "process": process
                     , "Promise": Promise
                     , "__dirname": __dirname
+                    , "URL": URL
                 }
             )
         ;
