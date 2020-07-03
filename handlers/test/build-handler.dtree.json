@@ -1,26 +1,26 @@
 {
     "defaults": [
-        ":TruJS.build.handlers.test.Defaults"
+        ":PunyJS.build.handlers.test.Defaults"
         , {"conflictResolution": "error"}
     ]
     , "errors": [
-        ":TruJS.build.handlers.test.Errors"
+        ":PunyJS.build.handlers.test.Errors"
         , {"conflictResolution": "error"}
     ]
     , "buildHandlers": [{
         "test": [{
-            "initialize": [":TruJS.build.handlers.test._TestInitializer", []]
-            , "collect": [":TruJS.build.handlers.file._FileCollector", []]
-            , "preprocess": [":TruJS.build.handlers.test._TestPreProcessor", []]
-            , "assemble": [":TruJS.build.handlers.test._TestAssembler", []]
-            , "format": [":TruJS.build.handlers.test._TestFormatter", []]
-            , "package": [":TruJS.build.handlers.test._TestPackager", []]
-            , "save": [":TruJS.build.handlers.file._FileSaver", []]
+            "initialize": [":PunyJS.build.handlers.test._TestInitializer", []]
+            , "collect": [":PunyJS.build.handlers.file._FileCollector", []]
+            , "preprocess": [":PunyJS.build.handlers.test._TestPreProcessor", []]
+            , "assemble": [":PunyJS.build.handlers.test._TestAssembler", []]
+            , "format": [":PunyJS.build.handlers.test._TestFormatter", []]
+            , "package": [":PunyJS.build.handlers.test._TestPackager", []]
+            , "save": [":PunyJS.build.handlers.file._FileSaver", []]
         }]
         , "ioc": [{
             "monolith": [{
-                "initialize": [":TruJS.build.handlers.ioc.monolith._MonolithInitializer", []]
-                , "preprocess": [":TruJS.build.handlers.ioc.monolith._MonolithPreProcessor", []]
+                "initialize": [":PunyJS.build.handlers.ioc.monolith._MonolithInitializer", []]
+                , "preprocess": [":PunyJS.build.handlers.ioc.monolith._MonolithPreProcessor", []]
             }]
         }]
     }]

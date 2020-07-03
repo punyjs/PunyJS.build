@@ -1,2 +1,2 @@
-# TruJS.build
-The TruJS build runner, built-in handlers and common functionality
+# PunyJS.build
+The PunyJS build runner, built-in handlers and common functionality

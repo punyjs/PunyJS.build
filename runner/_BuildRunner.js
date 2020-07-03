@@ -2,8 +2,8 @@
 * The build runner is an asyncronous utility that initializes the build, sets up any file watchers or web service listners, and then runs the build.
 * @factory
 *   @dependency {promise} promise ["+Promise"]
-*   @dependency {promise} buildInit [":TruJS.build.runner._BuildInit",[]]
-*   @dependency {promise} builder [":TruJS.build.runner._Builder",[]]
+*   @dependency {promise} buildInit [":PunyJS.build.runner._BuildInit",[]]
+*   @dependency {promise} builder [":PunyJS.build.runner._Builder",[]]
 */
 function _BuildRunner(
     promise

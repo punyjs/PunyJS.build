@@ -1,13 +1,13 @@
 /**
 * The ManifestInit utility uses the raw manifest object to generate an array of `{iManifestEntry}` instances. The `entries` property is the base for the array, each member is initialized and the default properties are applied to the entry object. The root properties in the manifest, other than the entries property, are add to each manifest entry; as a copy so no references exist between manifest entries.
 * @factory
-*   @dependency {function} utils_copy [":TruJS.core.object.Copy"]
-*   @dependency {function} utils_merge [":TruJS.core.object.Merge"]
-*   @dependency {function} utils_reference [":TruJS.core.object.Reference"]
-*   @dependency {function} is_object [":TruJS.core.is_Object"]
-*   @dependency {function} is_array [":TruJS.core.is_Array"]
-*   @dependency {object} defaults [":TruJS.build.runner.Defaults"]
-*   @dependency {object} errors [":TruJS.build.runner.Errors"]
+*   @dependency {function} utils_copy [":PunyJS.core.object.Copy"]
+*   @dependency {function} utils_merge [":PunyJS.core.object.Merge"]
+*   @dependency {function} utils_reference [":PunyJS.core.object.Reference"]
+*   @dependency {function} is_object [":PunyJS.core.is_Object"]
+*   @dependency {function} is_array [":PunyJS.core.is_Array"]
+*   @dependency {object} defaults [":PunyJS.build.runner.Defaults"]
+*   @dependency {object} errors [":PunyJS.build.runner.Errors"]
 * @interface iManifestEntry
 *   @property {string} type The build type to use for this manifest entry
 */

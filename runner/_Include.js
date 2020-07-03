@@ -3,13 +3,13 @@
 * @factory
 *   @singleton
 *   @dependency {promise} promise ["+Promise"]
-*   @dependency {function} is_nill [":TruJS.core.is.Nill"]
-*   @dependency {function} is_array [":TruJS.core.is.Array"]
-*   @dependency {function} is_string [":TruJS.core.is.String"]
-*   @dependency {function} utils_copy [":TruJS.core.object.Copy"]
-*   @dependency {object} reporter [":TruJS.core.log._Reporter"]
-*   @dependency {function} processDetails [":TruJS.core.log._ProcessDetails"]
-*   @dependency {object} defaults [":TruJS.build.runner.Defaults"]
+*   @dependency {function} is_nill [":PunyJS.core.is.Nill"]
+*   @dependency {function} is_array [":PunyJS.core.is.Array"]
+*   @dependency {function} is_string [":PunyJS.core.is.String"]
+*   @dependency {function} utils_copy [":PunyJS.core.object.Copy"]
+*   @dependency {object} reporter [":PunyJS.core.log._Reporter"]
+*   @dependency {function} processDetails [":PunyJS.core.log._ProcessDetails"]
+*   @dependency {object} defaults [":PunyJS.build.runner.Defaults"]
 */
 function _Include(
     promise

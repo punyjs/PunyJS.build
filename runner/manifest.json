@@ -1,19 +1,19 @@
 {
-    "name": "trujs-build"
+    "name": "punyjs-build"
     , "description": [
-        "This is the build manifest for the TruJS.build project."
+        "This is the build manifest for the PunyJS.build project."
     ]
     , "config": {
         "strict": true
         , "engine": "node"
-        , "output": "TruJS/builder/"
+        , "output": "PunyJS/builder/"
     }
     , "repos": [
         {
             "type": "git"
-            , "url": "https://github.com/trujs/TruJS.core.git"
+            , "url": "https://github.com/punyjs/PunyJS.core.git"
             , "branch": "development"
-            , "local": "TruJS/core"
+            , "local": "PunyJS/core"
         }
     ]
 
@@ -36,21 +36,21 @@
         , {
             "type": "ioc.monolith"
             , "base": [
-                "{TruJS.build.handlers.file}/build-handler.dtree.json"
-                , "{TruJS.build.handlers.javascript}/build-handler.dtree.json"
-                , "{TruJS.build.handlers.module}/build-handler.dtree.json"
-                , "{TruJS.build.handlers.ioc}/build-handler.dtree.json"
-                , "{TruJS.build.handlers.express}/build-handler.dtree.json"
-                , "{TruJS.build.handlers.test}/build-handler.dtree.json"
-                , "{TruJS.build.handlers.bootstrap}/build-handler.dtree.json"
+                "{PunyJS.build.handlers.file}/build-handler.dtree.json"
+                , "{PunyJS.build.handlers.javascript}/build-handler.dtree.json"
+                , "{PunyJS.build.handlers.module}/build-handler.dtree.json"
+                , "{PunyJS.build.handlers.ioc}/build-handler.dtree.json"
+                , "{PunyJS.build.handlers.express}/build-handler.dtree.json"
+                , "{PunyJS.build.handlers.test}/build-handler.dtree.json"
+                , "{PunyJS.build.handlers.bootstrap}/build-handler.dtree.json"
             ]
             , "config": {
                 "dtreeFileName": "${appDtreeFileName}"
                 , "fileName": "${appFileName}"
             }
         }
-        , "{TruJS.ioc}/manifests/base.manifest.json"
-        , "{TruJS.ioc}/manifests/node.manifest.json"
-        , "{TruJS.cmdArgs}/base.manifest.json"
+        , "{PunyJS.ioc}/manifests/base.manifest.json"
+        , "{PunyJS.ioc}/manifests/node.manifest.json"
+        , "{PunyJS.cmdArgs}/base.manifest.json"
     ]
 }

@@ -83,7 +83,7 @@ function _AssetDataCreator(
         return namespaces;
     }
     /**
-    * Loops through the namespace collection and fills in any namespace gaps; i.e. if `TruJS.module._ModuleDataCreator` is in the list, we'd add `TruJS` and `TruJS.module`.
+    * Loops through the namespace collection and fills in any namespace gaps; i.e. if `PunyJS.module._ModuleDataCreator` is in the list, we'd add `PunyJS` and `PunyJS.module`.
     * @function
     */
     function getMissingNamespaces(namespaces) {

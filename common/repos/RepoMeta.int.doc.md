@@ -9,8 +9,8 @@ Example:
 ```json
 {
     "type": "git"
-    , "url": "https://github.com/trujs/TruJS.core.git"
+    , "url": "https://github.com/punyjs/PunyJS.core.git"
     , "branch": "development"
-    , "local": "TruJS/core"
+    , "local": "PunyJS/core"
 }
 ```

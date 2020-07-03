@@ -1,17 +1,17 @@
 {
     "defaults": [
-        ":TruJS.build.runner.Defaults"
-        , ":TruJS.build.common.Defaults"
+        ":PunyJS.build.runner.Defaults"
+        , ":PunyJS.build.common.Defaults"
         , {"conflictResolution": "error"}
     ]
     , "errors": [
-        ":TruJS.build.runner.Errors"
-        , ":TruJS.build.common.Errors"
+        ":PunyJS.build.runner.Errors"
+        , ":PunyJS.build.common.Errors"
         , {"conflictResolution": "error"}
     ]
     , "gitDriver": ["+require('simple-git')"]
-    , "idGenerator": [":TruJS.core.data._IdGenerator",[]]
-    , "processDetails": [":TruJS.core.log._ProcessDetails",[]]
+    , "idGenerator": [":PunyJS.core.data._IdGenerator",[]]
+    , "processDetails": [":PunyJS.core.log._ProcessDetails",[]]
     , "workspacePath": ["+process.cwd()"]
     , "node":[{
         "path": ["+require('path')"]
@@ -19,40 +19,40 @@
     }]
     , "promise": ["+Promise"]
     , "utils": [{
-        "copy": [":TruJS.core.object.Copy"]
-        , "apply": [":TruJS.core.object.Apply"]
-        , "applyIf": [":TruJS.core.object.ApplyIf"]
-        , "lookup": [":TruJS.core.object.Lookup"]
-        , "reference": [":TruJS.core.object.Reference"]
-        , "regex": [":TruJS.core.utils._RegEx"]
-        , "merge": [":TruJS.core.object.Merge"]
-        , "update": [":TruJS.core.object.Update"]
-        , "ensure": [":TruJS.core.object.Ensure"]
+        "copy": [":PunyJS.core.object.Copy"]
+        , "apply": [":PunyJS.core.object.Apply"]
+        , "applyIf": [":PunyJS.core.object.ApplyIf"]
+        , "lookup": [":PunyJS.core.object.Lookup"]
+        , "reference": [":PunyJS.core.object.Reference"]
+        , "regex": [":PunyJS.core.utils._RegEx"]
+        , "merge": [":PunyJS.core.object.Merge"]
+        , "update": [":PunyJS.core.object.Update"]
+        , "ensure": [":PunyJS.core.object.Ensure"]
         , "func": [{
-            "inspector": [":TruJS.core.func._Inspector", []]
+            "inspector": [":PunyJS.core.func._Inspector", []]
         }]
     }]
     , "is": [{
-        "error": [":TruJS.core.is.Error"]
-        , "nill": [":TruJS.core.is.Nill"]
-        , "array": [":TruJS.core.is.Array"]
-        , "string": [":TruJS.core.is.String"]
-        , "object": [":TruJS.core.is.Object"]
-        , "regexp": [":TruJS.core.is.RegExp"]
-        , "empty": [":TruJS.core.is.Empty"]
-        , "numeric": [":TruJS.core.is.Numeric"]
+        "error": [":PunyJS.core.is.Error"]
+        , "nill": [":PunyJS.core.is.Nill"]
+        , "array": [":PunyJS.core.is.Array"]
+        , "string": [":PunyJS.core.is.String"]
+        , "object": [":PunyJS.core.is.Object"]
+        , "regexp": [":PunyJS.core.is.RegExp"]
+        , "empty": [":PunyJS.core.is.Empty"]
+        , "numeric": [":PunyJS.core.is.Numeric"]
     }]
     , "fs": [{
-        "filePathInfo": [":TruJS.core.fs._FilePathInfo", []]
-        , "fileInfo": [":TruJS.core.fs._FileInfo", []]
-        , "fileLoader": [":TruJS.core.fs._FileLoader", []]
-        , "fileWriter": [":TruJS.core.fs._FileWriter", []]
+        "filePathInfo": [":PunyJS.core.fs._FilePathInfo", []]
+        , "fileInfo": [":PunyJS.core.fs._FileInfo", []]
+        , "fileLoader": [":PunyJS.core.fs._FileLoader", []]
+        , "fileWriter": [":PunyJS.core.fs._FileWriter", []]
     }]
-    , "$run$": [":TruJS.build.runner._BuildRunner",[]]
-    , "buildInit": [":TruJS.build.runner._BuildInit",[]]
-    , "manifestInit": [":TruJS.build.runner._ManifestInit",[]]
-    , "manifestLoader": [":TruJS.build.runner._ManifestLoader",[]]
-    , "builder": [":TruJS.build.runner._Builder",[]]
-    , "buildStep": [":TruJS.build.runner._BuildStep",[]]
-    , "include": [":TruJS.build.runner._Include",[]]
+    , "$run$": [":PunyJS.build.runner._BuildRunner",[]]
+    , "buildInit": [":PunyJS.build.runner._BuildInit",[]]
+    , "manifestInit": [":PunyJS.build.runner._ManifestInit",[]]
+    , "manifestLoader": [":PunyJS.build.runner._ManifestLoader",[]]
+    , "builder": [":PunyJS.build.runner._Builder",[]]
+    , "buildStep": [":PunyJS.build.runner._BuildStep",[]]
+    , "include": [":PunyJS.build.runner._Include",[]]
 }

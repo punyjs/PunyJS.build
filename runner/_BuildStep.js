@@ -8,12 +8,12 @@
 * @factory
 *   @dependency {promise} promise ["+Promise"]
 *   @dependency {object} buildHandlers [".buildHandlers"]
-*   @dependency {function} utils_copy [":TruJS.object.Copy"]
-*   @dependency {function} utils_lookup [":TruJS.object.Lookup"]
+*   @dependency {function} utils_copy [":PunyJS.object.Copy"]
+*   @dependency {function} utils_lookup [":PunyJS.object.Lookup"]
 *   @dependency {object} reporter [".reporter"]
-*   @dependency {function} processDetails [":TruJS.log._ProcessDetails"]
-*   @dependency {object} defaults [":TruJS.build.runner.Defaults"]
-*   @dependency {object} errors [":TruJS.build.runner.Errors"]
+*   @dependency {function} processDetails [":PunyJS.log._ProcessDetails"]
+*   @dependency {object} defaults [":PunyJS.build.runner.Defaults"]
+*   @dependency {object} errors [":PunyJS.build.runner.Errors"]
 */
 function _BuildStep(
     promise

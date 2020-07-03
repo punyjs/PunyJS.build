@@ -9,13 +9,13 @@
 *   @dependency {object} node_path ["+require('path')"]
 *   @dependency {object} node_fs ["+require('fs')"]
 *   @dependency {string} workspacePath ["+process.cwd()"]
-*   @dependency {promise} manifestLoader [":TruJS.build.runner._ManifestLoader",[]]
-*   @dependency {object} utils_merge [":TruJS.object._Merge"]
-*   @dependency {object} utils_reference [":TruJS.object._Reference"]
-*   @dependency {object} utils_ensure [":TruJS.object._Ensure"]
-*   @dependency {object} is_object [":TruJS.core.is.Object"]
-*   @dependency {object} defaults [":TruJS.build.runner.Defaults"]
-*   @dependency {object} errors [":TruJS.build.runner.Errors"]
+*   @dependency {promise} manifestLoader [":PunyJS.build.runner._ManifestLoader",[]]
+*   @dependency {object} utils_merge [":PunyJS.object._Merge"]
+*   @dependency {object} utils_reference [":PunyJS.object._Reference"]
+*   @dependency {object} utils_ensure [":PunyJS.object._Ensure"]
+*   @dependency {object} is_object [":PunyJS.core.is.Object"]
+*   @dependency {object} defaults [":PunyJS.build.runner.Defaults"]
+*   @dependency {object} errors [":PunyJS.build.runner.Errors"]
 */
 function _BuildInit(
     promise

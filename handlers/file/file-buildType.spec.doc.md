@@ -1,6 +1,6 @@
-## Build Type: trujs.file
+## Build Type: punyjs.file
 
-The `trujs.file` build type is a simple file collector. It uses values in the `paths` property to determine the list of file paths, and then loads them.
+The `punyjs.file` build type is a simple file collector. It uses values in the `paths` property to determine the list of file paths, and then loads them.
 
 This build type can be used to collect files in one workflow and then share them with the other workflows, using includes, or the `file.collect` factory can be used as the base for other build types.
 
@@ -19,8 +19,8 @@ Example:
     "files": [
         "[r]./*.doc.*"
         , "[r,-]./*.json"
-        , "-{TruJS.build.runner}/*.json"
-        , "./TruJS/build/runner/*.js"
+        , "-{PunyJS.build.runner}/*.json"
+        , "./PunyJS/build/runner/*.js"
         , "./<views|components>/*.<html|css|scss>"
     ]
 }
@@ -44,7 +44,7 @@ Example:
 
 ###### REPOS PROPERTY
 
-The trujs.file collector includes a means to ensure the required files are available and at the correct version. It does this by using external source control mechanisms to clone and checkout exactly what the project requires.
+The punyjs.file collector includes a means to ensure the required files are available and at the correct version. It does this by using external source control mechanisms to clone and checkout exactly what the project requires.
 
 
 
@@ -53,8 +53,8 @@ Example:
 ```json
 {
     "type": "git"
-    , "url": "https://github.com/trujs/TruJS.core.git"
+    , "url": "https://github.com/punyjs/PunyJS.core.git"
     , "branch": "development"
-    , "local": "TruJS/core"
+    , "local": "PunyJS/core"
 }
 ```
