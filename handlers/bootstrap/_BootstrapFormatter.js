@@ -5,6 +5,8 @@
 function _BootstrapFormatter (
     promise
     , utils_reference
+    , is_object
+    , is_array
     , defaults
     , errors
 ) {
@@ -46,7 +48,7 @@ function _BootstrapFormatter (
             }
             else if (entry.templateDefaults.hasOwnProperty(name)) {
                 val = entry.templateDefaults[name];
-                if (typeof val === "object") {
+                if (is_object(val) || is_array(val)) {
                     val = JSON.stringify(val);
                 }
                 val = updateValue(
@@ -54,7 +56,7 @@ function _BootstrapFormatter (
                     , entry
                 );
             }
-            if (typeof val === "object") {
+            if (is_object(val)) {
                 val = JSON.stringify(val);
             }
             return val;

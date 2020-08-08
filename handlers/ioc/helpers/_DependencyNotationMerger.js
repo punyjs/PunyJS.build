@@ -133,8 +133,8 @@ function _DependencyNotationMerger(
         if (types === "literal,literal") {
             //if the literals are both objects, merge them
             if (
-                typeof entryA === "object"
-                && typeof entryB === "object"
+                is_object(entryA)
+                && is_object(entryB)
             ) {
                 //create a new entry
                 return {
@@ -224,9 +224,9 @@ function _DependencyNotationMerger(
     */
     function mergeUnion(entryA, entryB) {
         //remove the options off the end of the union entry, if exists
-        var entryAops = typeof entryA[entryA.length - 1] === "object"
+        var entryAops = is_object(entryA[entryA.length - 1])
             && entryA.pop()
-        , entryBops = typeof entryB[entryB.length - 1] === "object"
+        , entryBops = is_object(entryB[entryB.length - 1])
             && entryB.pop()
         //merge the members (minus the options)
         , merged = entryA.concat(entryB)
