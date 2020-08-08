@@ -36,7 +36,7 @@ function _DocExtractor(
     * A regexp pattern for splitting an @ tag
     * @property
     */
-    , AT_TAG_PARTS_PATT = /([^@]*)@([A-z_-]+)(?:\s+\{([A-z]+)\}(?:\s+((?:\[[^\]]+\])|(?:\{[^\}]+\})|(?:[^\s]+)))?)?(?:\s+(.+))?$/ms
+    , AT_TAG_PARTS_PATT = /([^@]*)@([A-z_-]+)\s*(?:\s+\{([A-z]+)\}(?:\s+((?:\[[^\]]+\])|(?:\{[^\}]+\})|(?:[^\s]+)))?)?(?:\s+(.+))?$/ms
     /**
     * A regexp pattern for splitting an @ tag
     * @property
@@ -201,7 +201,7 @@ function _DocExtractor(
                 tagObj.name = tagObj.name.substring(1, tagObj.name.length - 1);
                 tagObj.optional = true;
             }
-            
+
             //if there isn't a name and the desc is a single series of alpha numeric characters, then that is the name
             if (
                 !tagObj.name
