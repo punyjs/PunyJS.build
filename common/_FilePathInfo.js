@@ -38,7 +38,7 @@ function _FilePathInfo(
             && pathFrag.ext !== "*"
             && !options.filter
         ) {
-            options.filter = [pathFrag.ext];
+            options.filter = [pathFrag.ext.substring(1)];
         }
         //skip looking up the path info if this is a minus
         if (!pathFrag.minus) {
