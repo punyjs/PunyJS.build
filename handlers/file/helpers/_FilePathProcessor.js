@@ -96,7 +96,7 @@ function _FilePathProcessor(
         if (path[0] === ".") {
             path = node_path.join(
                 defaults.sourceDirectory
-                , projectDir
+                , projectName
                 , path
             );
         }
