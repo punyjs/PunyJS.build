@@ -10,6 +10,8 @@ function _FileCollector(
     , buildHelpers_file_checkoutRepositories
     , buildHelpers_javaScriptMetaExtractor
     , buildHelpers_pathParser
+    , workspacePath
+    , node_path
     , is_object
     , is_array
     , reporter
@@ -40,6 +42,11 @@ function _FileCollector(
     * @alias
     */
     , javaScriptMetaExtractor = buildHelpers_javaScriptMetaExtractor
+    /**
+    * A regiular expression pattern for matching the file seperator
+    * @property
+    */
+    , SEP_PATT = /[\\\/]/g;
     ;
 
     /**
@@ -95,7 +102,10 @@ function _FileCollector(
         })
         //then add the meta data
         .then(function thenAddMetaData(assets) {
-            return addMetaData(assets);
+            return addMetaData(
+                entry
+                , assets
+            );
         });
     };
 
@@ -150,10 +160,13 @@ function _FileCollector(
     /**
     * @function
     */
-    function addMetaData(assets) {
+    function addMetaData(entry, assets) {
         try {
             assets.forEach(function forEachAsset(asset) {
-                var meta = getAssetMetaData(asset);
+                var meta = getAssetMetaData(
+                    entry
+                    , asset
+                );
                 asset.meta = meta;
             });
 
@@ -166,11 +179,56 @@ function _FileCollector(
     /**
     * @function
     */
-    function getAssetMetaData(asset) {
+    function getAssetMetaData(entry, asset) {
+        var meta, name;
+
         if (asset.path.ext === ".js") {
-            return javaScriptMetaExtractor(
+            meta = javaScriptMetaExtractor(
                 asset
             );
         }
+        else {
+            meta = {};
+        }
+
+        if (!!entry.config.project) {
+            meta.projectName = entry.config.project;
+        }
+
+        //create the namespace from the path
+        name = createNamespace(
+            asset.path
+        );
+
+        meta.namespace = name.namespace;
+        meta.schemes = name.schemes;
+
+        return meta;
+    }
+    /**
+    * @function
+    */
+    function createNamespace(path) {
+        var dotIndex = path.name.indexOf(".")
+        , name = dotIndex === -1
+            ? path.name
+            : path.name
+                .substring(0, dotIndex)
+        , schemes = dotIndex !== -1
+            ? path.name
+                .substring(dotIndex + 1)
+                .split(".")
+            : null
+        , namespace = path.dir
+            .replace(SEP_PATT, ".")
+        , rootPath = node_path.join(workspacePath, defaults.sourceDirectory)
+            .replace(SEP_PATT, ".")
+        ;
+        namespace = namespace.replace(`${rootPath}.`, "");
+
+        return {
+            "namespace": `${namespace}.${name}`
+            , "schemes": schemes
+        };
     }
 }
