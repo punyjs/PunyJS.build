@@ -81,7 +81,7 @@ function _FileSaver(
             );
         }
         catch(ex) {
-            return promise.reject();
+            return promise.reject(ex);
         }
     }
     /**
