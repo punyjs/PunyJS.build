@@ -7,6 +7,9 @@
         ":PunyJS.build.handlers.test.Errors"
         , {"conflictResolution": "error"}
     ]
+    , "utils": [{
+        "funcInspector": [":PunyJS.core.func._Inspector",[]]
+    }]
     , "buildHandlers": [{
         "test": [{
             "initialize": [":PunyJS.build.handlers.test._TestInitializer", []]
