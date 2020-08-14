@@ -47,6 +47,8 @@ function _TestPackager(
                     {
                         "type": "unit"
                         , "name": unitKey
+                        , "namespace": `unit.${unitKey}`
+                        , "id": `unit.${unitKey}`
                         , "data": unitAsset.data
                     }
                 );
