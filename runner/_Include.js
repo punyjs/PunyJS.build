@@ -6,6 +6,7 @@
 *   @dependency {function} is_nill [":PunyJS.core.is.Nill"]
 *   @dependency {function} is_array [":PunyJS.core.is.Array"]
 *   @dependency {function} is_string [":PunyJS.core.is.String"]
+*   @dependency {function} is_numeric [":PunyJS.core.is.Numeric"]
 *   @dependency {function} utils_copy [":PunyJS.core.object.Copy"]
 *   @dependency {object} reporter [":PunyJS.core.log._Reporter"]
 *   @dependency {function} processDetails [":PunyJS.core.log._ProcessDetails"]
@@ -16,6 +17,7 @@ function _Include(
     , is_nill
     , is_array
     , is_string
+    , is_numeric
     , utils_copy
     , reporter
     , processDetails
@@ -67,10 +69,10 @@ function _Include(
         , includeAr = !!entry.include
             ? entry.include[includeName]
             : null
-        , entryAssets = assets[index];
+        ;
 
         if (is_nill(includeAr)) {
-            return entryAssets;
+            return assets[index];
         }
 
         if (!is_array(includeAr)) {
@@ -83,13 +85,14 @@ function _Include(
             , procDetail
         );
         reporter.info(
-            `Including Assets From ${includeAr}`
+            `Including assets from entries [${includeAr}]`
             , stepProcDetail
         );
         ///END LOGGING
+
         //loop through the include array
         includeAr.forEach(function forEachInclude(include) {
-            entryAssets = processInclude(
+            assets[index] = processInclude(
                 assets
                 , index
                 , keys
@@ -98,7 +101,7 @@ function _Include(
             );
         });
 
-        return entryAssets;
+        return assets[index];
     }
     /**
     * @function
@@ -108,7 +111,7 @@ function _Include(
         , entryAssets = assets[entryIndex]
         ;
         //if the included index is a string, translate it
-        if (is_string(include)) {
+        if (!is_numeric(include)) {
             includeIndex =
                 Object.values(keys)
                 .indexOf(include)
@@ -118,6 +121,7 @@ function _Include(
         if (includeIndex < 0) {
             includeIndex = entryIndex + includeIndex;
         }
+
 
         if (is_array(assets[includeIndex])) {
             //create a copy of the included index's entry assets to remove references
