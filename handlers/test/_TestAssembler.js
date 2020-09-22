@@ -15,17 +15,28 @@ function _TestAssembler(
         , assets
     ) {
         try {
-            var tests = [];
+            var tests = []
+            , leftovers = []
+            ;
 
             //loop through the assets and add them to an array
             assets.forEach(function forEachAsset(asset) {
-                tests.push(asset);
+                if (asset.isTest) {
+                    tests.push(asset);
+                }
+                else {
+                    leftovers.push(asset);
+                }
             });
 
             return promise.resolve(
-                [{
-                    "data": tests
-                }]
+                [
+                    {
+                        "data": tests
+                        , "isTest": true
+                    }
+                ]
+                .concat(leftovers)
             );
         }
         catch(ex) {

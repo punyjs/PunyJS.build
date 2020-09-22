@@ -67,7 +67,8 @@ function _TestPreprocessor(
     */
     function processAsset(asset) {
         var docs = docExtractor(asset)
-        , tests = [];
+        , tests = []
+        , isTest = false;
 
         //loop through the doc assets, for the test entries,
         docs.forEach(function forEachDocEntry(entry, indx) {
@@ -80,8 +81,15 @@ function _TestPreprocessor(
                         , asset
                     )
                 );
+                isTest = true;
             }
         });
+
+        if (!isTest) {
+            tests.push(
+                asset
+            );
+        }
 
         return tests;
     }
@@ -107,12 +115,10 @@ function _TestPreprocessor(
             , docEntry.offsetEnd
         );
         test.data = test.data.match(TRIM_PATT)[1];
-
         //make sure we have a test type
         if (!test.hasOwnProperty("type")) {
             test.type = defaults.testEntryType;
         }
-
         //get the test function name
         funcMeta = utils_funcInspector(
             test.data
@@ -130,6 +136,8 @@ function _TestPreprocessor(
         if (!test.id) {
             test.id = `${test.namespace}.${test.name}`;
         }
+
+        test.isTest = true;
 
         return test;
     }

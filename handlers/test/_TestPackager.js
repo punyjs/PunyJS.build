@@ -5,7 +5,15 @@
 function _TestPackager(
     promise
     , is_array
+    , is_nill
+    , utils_reference
 ) {
+    /**
+    * A regular expression patter for replacing "{tag}" bind variables
+    * @property
+    */
+    var TAG_PATT = /\{([^\}]+)\}/g
+    ;
 
     /**
     * @worker
@@ -14,77 +22,143 @@ function _TestPackager(
         entry
         , assets
     ) {
-        //add any includes
-        return new promise(
-            addIncludes.bind(null, entry, assets)
-        );
+        try {
+            var testFile = assets.shift()
+            //create unit entries for each additional asset
+            , units = createUnits(
+                entry
+                , assets
+            );
+            //add the units to the test data and stringify
+            testFile.data = testFile.data.concat(units);
+            testFile.data = JSON.stringify(testFile.data);
+
+            return promise.resolve([testFile]);
+        }
+        catch(ex) {
+            return promise.reject(ex);
+        }
     };
 
     /**
     * @function
     */
-    function addIncludes(entry, assets, resolve, reject) {
-        try {
-            //the first asset is the test data asset
-            var testAsset = assets.shift()
-            , testData = testAsset.data
-            , include = entry.include
-            , includeKeys = Object.keys(include)
-            ;
-            //loop through the units and find the matching asset(s) for each
-            Object.keys(entry.units)
-            .forEach(function forEachUnit(unitKey) {
-                var unitAsset = getUnitAsset(
-                    entry.units[unitKey]
-                    , assets
-                );
-                //for now only take the first match
-                if (is_array(unitAsset)) {
-                    unitAsset = unitAsset[0];
-                }
+    function createUnits(entry, assets) {
+        var unitEntries = [];
+        //loop through the assets
 
-                testData.push(
-                    {
-                        "type": "unit"
-                        , "name": unitKey
-                        , "namespace": `unit.${unitKey}`
-                        , "id": `unit.${unitKey}`
-                        , "data": unitAsset.data
-                    }
-                );
-            });
+        assets
+        .forEach(function forEachAsset(asset) {
+            //determine the unit that the asset came from
+            var unitKey = determineUnitKey(
+                entry.units
+                , asset
+            )
+            //create the unit entry
+            , unitEntry = createUnitEntry(
+                entry
+                , asset
+                , unitKey
+            );
 
-            testAsset.data = JSON.stringify(testData);
+            unitEntries.push(unitEntry);
+        });
 
-            resolve([testAsset]);
-        }
-        catch(ex) {
-            reject(ex);
-        }
+        return unitEntries;
     }
     /**
     * @function
     */
-    function getUnitAsset(unit, assets) {
-        var includedAssets = []
-        , includeKey = Object.keys(unit.include)[0]
-        , include = unit.include[includeKey]
-        ;
+    function determineUnitKey(units, asset) {
+        var unitKey;
 
-        assets
-        .every(function everyAsset(asset) {
+        if (!asset.included) {
+            return;
+        }
+
+        Object.keys(units)
+        .every(function findUnit(key) {
+            var unit = units[key]
+            , includeIndex = determineIncludeIndex(
+                asset
+                , unit
+            );
+
+            if (!is_nill(includeIndex)) {
+                unitKey = key;
+                return false;
+            }
+
+            return true;
+        });
+
+        return unitKey;
+    }
+    /**
+    * @function
+    */
+    function determineIncludeIndex(asset, unit) {
+        var includeIndex;
+
+        Object.keys(unit.include)
+        .every(function findIncludeIndex(includeKey) {
+            var include = unit.include[includeKey];
             if (asset.included.includeName === includeKey) {
                 if (asset.included.originalIndex === include) {
-                    includedAssets.push(asset);
+                    includeIndex = include;
                     return false;
                 }
             }
             return true;
         });
-
-        if (includedAssets.length === 1) {
-            return includedAssets[0];
+    //console.log(asset.included, unit.include, includeIndex)
+        return includeIndex;
+    }
+    /**
+    * @function
+    */
+    function createUnitEntry(entry, asset, unitKey) {
+        var unit = entry.units[unitKey];
+        //record the number of assets that are associated to this unit
+        if (is_nill(unit.count)) {
+            unit.count = 1;
         }
-        return includedAssets;
+        else {
+            unit.count++;
+        }
+        //if there is not a nameTemplate use the unit key
+        if (!unit.hasOwnProperty("nameTemplate")) {
+            name = unitKey;
+            if (unit.count > 1) {
+                name+= `${unit.count - 1}`;
+            }
+        }
+        else {
+            templateData = {
+                "key": unitKey
+                , "unit": unit
+                , "asset": asset
+            };
+            name = unit.nameTemplate.replace(
+                TAG_PATT
+                , function replaceTag(tag, path) {
+                    var ref = utils_reference(
+                        path
+                        , templateData
+                    );
+                    if (ref.found) {
+                        return ref.value;
+                    }
+                    return tag;
+                }
+            );
+        }
+        return {
+            "type": "unit"
+            , "id": name
+            , "name": name
+            , "namespace": name
+            , "data": asset.data
+        };
     }
 }

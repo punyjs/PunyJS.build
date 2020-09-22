@@ -10,6 +10,8 @@ function _TestInitializer(
     , is_array
     , is_object
     , is_numeric
+    , is_empty
+    , is_nill
     , utils_copy
     , defaults
 ) {
@@ -86,54 +88,56 @@ function _TestInitializer(
             , includePropNames = Object.values(defaults.includeProperties)
             ;
             ///INPUT VALIDATION
-            //if there are unit properties process them, looking for shorthand includes
-            if (entry.hasOwnProperty("units")) {
-                //check each unit to see if it's using shorthand
-                Object.keys(entry.units)
-                .forEach(function forEachKey(key) {
-                    var unit = entry.units[key], includeIndex;
-                    if (!is_object(unit)) {
-                        includeIndex = unit;
-                        unit = entry.units[key] = {};
-                    }
-                    if (!unit.hasOwnProperty("include")) {
-                        unit.include = {};
-                    }
-                    //if the include index is not numeric
-                    if (!is_numeric(includeIndex)) {
-                        //for now use the default
-                        ///TODO: see if throwing an error is more appropriate
-                        includeIndex = defaults.testIncludeIndex;
-                    }
-                    unit.include[defaults.testIncludeType] = includeIndex;
-                });
-            }
             //if we don't have a `units` property, create the default
             if (!entry.hasOwnProperty("units")) {
                 entry.units = {};
             }
-            //if we don't have any include entries
-            if (Object.keys(entry.units).length === 0) {
+            //if we don't have any unit entries then add the default
+            if (is_empty(entry.units)) {
                 unitName = unitNameTemplate.replace("${index}", 1);
                 entry.units[unitName] = {
                     "include": {}
                 };
-                entry.units[unitName].include[defaults.testIncludeType] =
-                    defaults.testIncludeIndex;
+            }
+            //check each unit to see if it's using shorthand and to ensure there is an include
+            Object.keys(entry.units)
+            .forEach(function forEachKey(key) {
+                var unit = entry.units[key], includeIndex;
+                //shorthand, the property value is the include index
+                if (!is_object(unit)) {
+                    includeIndex = unit;
+                    unit = entry.units[key] = {
+                        "include": {}
+                    };
+                }
+                //we must have an include object
+                if (!unit.hasOwnProperty("include")) {
+                    unit.include = {};
+                }
+                if (is_empty(unit.include)) {
+                    if (is_numeric(includeIndex)) {
+                        unit.include[defaults.testIncludeType] = includeIndex;
+                    }
+                    else {
+                        unit.include[defaults.testIncludeType] =
+                            defaults.testIncludeIndex;
+                    }
+                }
+            });
+            //make sure we have the entry level include object
+            if (!is_object(entry.include)) {
+                entry.include = {};
             }
             ///END INPUT VALIDATION
 
-            //loop through the entry's units and add any includes
+            //loop through the units and add each units include to the entry level include collection
             Object.keys(entry.units)
             .forEach(function forEachUnit(key) {
                 var unit = entry.units[key]
                 , unitInclude = unit.include
-                , entryInclude = entry.include;
-                ///INPUT VALIDATION
-                if (!is_object(entryInclude)) {
-                    entryInclude = entry.include = {};
-                }
-                ///END INPUT VALIDATION
+                , entryInclude = entry.include
+                ;
+
                 Object.keys(unitInclude)
                 .forEach(function forEachUniutInclude(key) {
                     var includeValue = unitInclude[key];
