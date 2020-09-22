@@ -6,6 +6,7 @@ function _MonolithPreProcessor(
     promise
     , buildHandlers_module_preprocess
     , buildHelpers_ioc_registryEntryCreator
+    , buildHelpers_ioc_globalRedeclarationList
     , utils_func_inspector
 ) {
     /**
@@ -28,11 +29,27 @@ function _MonolithPreProcessor(
     */
     , registryEntryCreator = buildHelpers_ioc_registryEntryCreator
     /**
+    * @alias
+    */
+    , globalRedeclarationList = buildHelpers_ioc_globalRedeclarationList
+    /**
+    * A contrainer for the stringifyied properties on the globalRedeclarationList
+    * @property
+    */
+    , globalList = {}
+    /**
     * A regexp pattern for matching new line (and CR)
     * @property
     */
     , NL_PATT = /\r?\n/g
     ;
+
+    //setup the stringified redeclarition strings
+    Object.keys(globalRedeclarationList)
+    .forEach(function forEachEngine(engineKey) {
+        globalList[engineKey] =
+            JSON.stringify(globalRedeclarationList[engineKey]);
+    });
 
     /**
     * @worker
@@ -77,8 +94,19 @@ function _MonolithPreProcessor(
     */
     function createHeader(entry, resolve, reject) {
         try {
-            var header = {
-                "data": `"use strict";\n\nvar ${entry.config.hideGlobals.join(",")};`
+            var engine = entry.config.engine || cnsts.defaultEngine
+            , header = {
+                "data": [
+                    `"use strict";`
+                    , `//hide the globals from the dependencies`
+                    , `var ${globalRedeclarationList[engine].join(",")};`
+                ].join("\n\n")
+                , "naming": {
+                    "namespace": `${entry.config.project}.Header`
+                    , "name": "Header"
+                    , "parent": entry.config.project
+                    , "root": entry.config.project.split(".")[0]
+                }
             };
 
             resolve(header);
@@ -101,7 +129,7 @@ function _MonolithPreProcessor(
 
             assets[0].data = [
                 "// Create the IOC container"
-                , `var container = (${container})()`
+                , `var container = (${container})(${globalList[engine]})`
                 , ", register = container.register;"
                 , "//export the container"
                 , `${cnsts.export[engine]}container;`

@@ -33,6 +33,7 @@
             , "assetPathListGenerator": [":PunyJS.build.handlers.ioc.helpers._AssetPathListGenerator", []]
             , "assetPathListGenerator": [":PunyJS.build.handlers.ioc.helpers._AssetPathListGenerator", []]
             , "registryEntryCreator": [":PunyJS.build.handlers.ioc.helpers._RegistryEntryCreator", []]
+            , "globalRedeclarationList": [":PunyJS.build.handlers.ioc.helpers.GlobalRedeclarationList"]
         }]
     }]
 }

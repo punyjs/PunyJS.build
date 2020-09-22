@@ -10,13 +10,7 @@ function setupApp(app) {
             .setContainer(app.container)
             .setAbstractTree(app.dependencyTree)
             .setGlobal(
-                {
-                    "global": window
-                    , "document": document
-                    , "location": location
-                    , "Promise": Promise
-                    , "URL": URL
-                }
+                window
             )
         ;
 
