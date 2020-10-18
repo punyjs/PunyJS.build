@@ -64,6 +64,10 @@ function setupApp(app) {
                     "enumerable": true
                     , "value": Promise
                 }
+                , "Proxy": {
+                    "enumerable": true
+                    , "value": Proxy
+                }
                 , "Date": {
                     "enumerable": true
                     , "value": Date
@@ -75,6 +79,10 @@ function setupApp(app) {
                 , "Object": {
                     "enumerable": true
                     , "value": Object
+                }
+                , "Function": {
+                    "enumerable": true
+                    , "value": Function
                 }
                 , "setTimeout": {
                     "enumerable": true
