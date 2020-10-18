@@ -28,7 +28,7 @@
         , "apply": [":PunyJS.core.object.Apply"]
         , "applyIf": [":PunyJS.core.object.ApplyIf"]
         , "lookup": [":PunyJS.core.object.Lookup"]
-        , "regex": [":PunyJS.core.utils._RegEx"]
+        , "regex": [":PunyJS.core.regexp._RegExp"]
         , "merge": [":PunyJS.core.object.Merge"]
         , "update": [":PunyJS.core.object.Update"]
     }]
