@@ -61,7 +61,7 @@ function _FileCollector(
         var  proc = promise.resolve();
 
         //checkout any required repositories
-        if (entry.config.checkout === "true") {
+        if (entry.config.checkout === true) {
             proc = checkoutRepositories(
                 entry
                 , procDetail
