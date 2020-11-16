@@ -167,7 +167,15 @@ function _ManifestInit(
                         , function updateVar(match, name) {
                             var ref = utils_reference(name, base);
                             if (ref.found) {
-                                return ref.value || "";
+                                if (is_nill(ref.value)) {
+                                    return "";
+                                }
+                                if (ref.value.indexOf(match) !== -1) {
+                                    throw new Error(
+                                        `${errors.circular_manifest_variable} (${name})`
+                                    );
+                                }
+                                return ref.value;
                             }
                             throw new Error(
                                 `${errors.missing_manifest_variable} (${name})`
