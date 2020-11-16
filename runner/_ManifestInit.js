@@ -17,6 +17,9 @@ function _ManifestInit(
     , utils_reference
     , is_object
     , is_array
+    , is_nill
+    , reporter
+    , processDetails
     , defaults
     , errors
 ) {
@@ -50,18 +53,37 @@ function _ManifestInit(
     /**
     * @function
     */
-    function initManifest(manifest) {
+    function initManifest(manifest, parentProcDetail) {
         var entries = manifest[defaults.manifestEntriesPropertyName]
         , initializedEntries = []
+        , manifestProcDetail
         ;
         if (!is_array(entries)) {
             return;
         }
+        ///LOGGING
+        manifestProcDetail = processDetails(
+            "initManifest"
+            , "_ManifestInit.ManifestInit"
+            , parentProcDetail
+        );
+        reporter.extended(
+            `Initializing manifest, ${entries.length} entries`
+            , manifestProcDetail
+        );
+        ///END LOGGING
         //loop through the manifest entries, adding the manifest properties
-        entries.forEach(function forEachEntry(entry) {
-            var initializedEntry = initEntry(
+        entries.forEach(function forEachEntry(entry, indx) {
+            var entryProcDetail = processDetails(
+                "initEntry"
+                , "_ManifestInit.ManifestInit"
+                , manifestProcDetail
+            )
+            , initializedEntry = initEntry(
                 manifest
                 , entry
+                , indx
+                , entryProcDetail
             );
             //if the initialized entry has an entries property run as a manifest
             if (
@@ -70,7 +92,10 @@ function _ManifestInit(
                 )
             ) {
                 initializedEntries = initializedEntries.concat(
-                    initManifest(initializedEntry)
+                    initManifest(
+                        initializedEntry
+                        , entryProcDetail
+                    )
                 );
             }
             //otherwise add the entry to the array
@@ -86,7 +111,13 @@ function _ManifestInit(
     /**
     * @function
     */
-    function initEntry(manifest, entry) {
+    function initEntry(manifest, entry, indx, procDetail) {
+        ///LOGGING
+        reporter.extended(
+            `Initializing entry ${entry.name || indx}`
+            , procDetail
+        );
+        ///END LOGGING
         //make a copy of the manifest to remove references
         manifest = utils_copy(manifest);
         delete manifest[defaults.manifestEntriesPropertyName];
@@ -102,6 +133,11 @@ function _ManifestInit(
     * @function
     */
     function updateInitializedEntries(entries) {
+        ///LOGGING
+        reporter.extended(
+            `Setting bind vars for ${entries.length} entries`
+        );
+        ///END LOGGING
         entries
         .forEach(function forEachEntry(entry) {
             updateEntryProperties(

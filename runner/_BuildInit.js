@@ -27,6 +27,7 @@ function _BuildInit(
     , utils_reference
     , utils_ensure
     , is_object
+    , reporter
     , defaults
     , errors
 ) {
@@ -42,6 +43,11 @@ function _BuildInit(
     *   @async
     */
     return function BuildInit(cmdArgs) {
+        ///LOGGING
+        reporter.info(
+            "Initializing Builder"
+        );
+        ///END LOGGING
         var manifest, entries;
         //load the manifest and config file
         return promise.all([
@@ -189,6 +195,11 @@ function _BuildInit(
     * @function
     */
     function mergeArgsConfig(cmdArgs, config) {
+        ///LOGGING
+        reporter.info(
+            "Merging configurations"
+        );
+        ///END LOGGING
         try {
             //starting empty
             if (!config) {

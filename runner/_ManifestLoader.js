@@ -13,6 +13,7 @@ function _ManifestLoader(
     , is
     , utils_merge
     , utils_copy
+    , reporter
     , defaults
 ) {
     /**
@@ -151,6 +152,10 @@ function _ManifestLoader(
                 , match[2]
             );
         }
+
+        reporter.extended(
+            `Loading manifest ${path}`
+        );
 
         return fs_fileLoader(
             path

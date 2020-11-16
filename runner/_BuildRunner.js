@@ -9,6 +9,7 @@ function _BuildRunner(
     promise
     , buildInit
     , builder
+    , reporter
 ) {
 
     /**
@@ -33,6 +34,9 @@ function _BuildRunner(
     * @function
     */
     function setupRunner(config) {
+        reporter.info(
+            "Setting up runner"
+        );
         //TODO: implement the runner setup
         return promise.resolve(config);
     }
