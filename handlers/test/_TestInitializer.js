@@ -12,6 +12,7 @@ function _TestInitializer(
     , is_numeric
     , is_empty
     , is_nill
+    , is_string
     , utils_copy
     , defaults
 ) {
@@ -103,6 +104,7 @@ function _TestInitializer(
             Object.keys(entry.units)
             .forEach(function forEachKey(key) {
                 var unit = entry.units[key], includeIndex;
+
                 //shorthand, the property value is the include index
                 if (!is_object(unit)) {
                     includeIndex = unit;
@@ -115,13 +117,7 @@ function _TestInitializer(
                     unit.include = {};
                 }
                 if (is_empty(unit.include)) {
-                    if (is_numeric(includeIndex)) {
-                        unit.include[defaults.testIncludeType] = includeIndex;
-                    }
-                    else {
-                        unit.include[defaults.testIncludeType] =
-                            defaults.testIncludeIndex;
-                    }
+                    unit.include[defaults.testIncludeType] = includeIndex;
                 }
             });
             //make sure we have the entry level include object

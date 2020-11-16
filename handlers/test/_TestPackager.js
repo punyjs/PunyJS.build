@@ -29,6 +29,7 @@ function _TestPackager(
                 entry
                 , assets
             );
+
             //add the units to the test data and stringify
             testFile.data = testFile.data.concat(units);
             testFile.data = JSON.stringify(testFile.data);
@@ -49,19 +50,30 @@ function _TestPackager(
 
         assets
         .forEach(function forEachAsset(asset) {
+            if (!asset.included) {
+                return;
+            }
+            if (asset.included.entryIndex !== entry.index) {
+                return;
+            }
             //determine the unit that the asset came from
             var unitKey = determineUnitKey(
                 entry.units
                 , asset
             )
             //create the unit entry
-            , unitEntry = createUnitEntry(
-                entry
-                , asset
-                , unitKey
-            );
+            , unitEntry = !is_nill(unitKey)
+                ? createUnitEntry(
+                    entry
+                    , asset
+                    , unitKey
+                )
+                : null
+            ;
 
-            unitEntries.push(unitEntry);
+            if (!!unitEntry) {
+                unitEntries.push(unitEntry);
+            }
         });
 
         return unitEntries;
@@ -71,10 +83,6 @@ function _TestPackager(
     */
     function determineUnitKey(units, asset) {
         var unitKey;
-
-        if (!asset.included) {
-            return;
-        }
 
         Object.keys(units)
         .every(function findUnit(key) {
@@ -99,7 +107,6 @@ function _TestPackager(
     */
     function determineIncludeIndex(asset, unit) {
         var includeIndex;
-
         Object.keys(unit.include)
         .every(function findIncludeIndex(includeKey) {
             var include = unit.include[includeKey];
@@ -111,7 +118,7 @@ function _TestPackager(
             }
             return true;
         });
-    //console.log(asset.included, unit.include, includeIndex)
+
         return includeIndex;
     }
     /**
@@ -119,6 +126,7 @@ function _TestPackager(
     */
     function createUnitEntry(entry, asset, unitKey) {
         var unit = entry.units[unitKey];
+
         //record the number of assets that are associated to this unit
         if (is_nill(unit.count)) {
             unit.count = 1;
