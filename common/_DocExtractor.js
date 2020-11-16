@@ -160,59 +160,69 @@ function _DocExtractor(
     function convertTags(atTags) {
         var lastTag;
 
-        return atTags.map(function mapTag(tag) {
-            //parse the tag
-            var parts = tag.match(AT_TAG_PARTS_PATT), tagObj;
-            //create the tag object
-            tagObj = {
-                "indent": !!parts[1] && parts[1].length || 0
-                , "tag": parts[2]
-                , "raw": parts[0]
-            };
+        return atTags.map(
+            function mapTag(tag) {
+                //parse the tag
+                var parts = tag.match(AT_TAG_PARTS_PATT), tagObj;
 
-            !!parts[3] && (tagObj.type = parts[3]);
-            !!parts[4] && (tagObj.name = parts[4]);
-            !!parts[5] && (tagObj.desc = parts[5]);
+                if (!parts) {
+                    return;
+                }
 
-            //clean the description
-            if (!!tagObj.desc) {
-                tagObj.desc = tagObj.desc
-                    .split(LN_SPLIT_PATT)
-                    .map(function mapLine(line,indx) {
-                        return line.replace(DESC_CLEAN_PATT, "$1");
-                    })
-                    .filter(function filterLines(line) {
-                        if (is.empty(line)) {
-                            return false;
-                        }
-                        return true;
-                    })
-                    .join("\n");
+                //create the tag object
+                tagObj = {
+                    "indent": !!parts[1] && parts[1].length || 0
+                    , "tag": parts[2]
+                    , "raw": parts[0]
+                };
+
+                !!parts[3] && (tagObj.type = parts[3]);
+                !!parts[4] && (tagObj.name = parts[4]);
+                !!parts[5] && (tagObj.desc = parts[5]);
+
+                //clean the description
+                if (!!tagObj.desc) {
+                    tagObj.desc = tagObj.desc
+                        .split(LN_SPLIT_PATT)
+                        .map(function mapLine(line,indx) {
+                            return line.replace(DESC_CLEAN_PATT, "$1");
+                        })
+                        .filter(function filterLines(line) {
+                            if (is.empty(line)) {
+                                return false;
+                            }
+                            return true;
+                        })
+                        .join("\n");
+                }
+                //set the last tag for the next loop
+                lastTag = tagObj;
+
+                //if the tag name is in square brackets then it's optional
+                // do this before converting the description to the name
+                if (
+                    !!tagObj.name
+                     && tagObj.name.match(OPTIONAL_NM_PATT)
+                 ) {
+                    tagObj.name = tagObj.name.substring(1, tagObj.name.length - 1);
+                    tagObj.optional = true;
+                }
+
+                //if there isn't a name and the desc is a single series of alpha numeric characters, then that is the name
+                if (
+                    !tagObj.name
+                     && !!tagObj.desc
+                     && tagObj.desc.match(ALPHA_NUM_PATT)
+                ) {
+                    tagObj.name = tagObj.desc;
+                    delete tagObj.desc;
+                }
+
+                return tagObj;
             }
-            //set the last tag for the next loop
-            lastTag = tagObj;
-
-            //if the tag name is in square brackets then it's optional
-            // do this before converting the description to the name
-            if (
-                !!tagObj.name
-                 && tagObj.name.match(OPTIONAL_NM_PATT)
-             ) {
-                tagObj.name = tagObj.name.substring(1, tagObj.name.length - 1);
-                tagObj.optional = true;
-            }
-
-            //if there isn't a name and the desc is a single series of alpha numeric characters, then that is the name
-            if (
-                !tagObj.name
-                 && !!tagObj.desc
-                 && tagObj.desc.match(ALPHA_NUM_PATT)
-            ) {
-                tagObj.name = tagObj.desc;
-                delete tagObj.desc;
-            }
-
-            return tagObj;
+        )
+        .filter(function filterEmpty(tagObj) {
+            return !!tagObj;
         });
     }
     /**
