@@ -136,6 +136,7 @@ function _Include(
                     "includeName": includeName
                     , "originalIndex": include
                     , "resolvedIndex": includeIndex
+                    , "entryIndex": entryIndex
                     , "assetIndex": -1
                 }
             );
