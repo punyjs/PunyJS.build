@@ -139,7 +139,8 @@ function _ManifestInit(
         );
         ///END LOGGING
         entries
-        .forEach(function forEachEntry(entry) {
+        .forEach(function forEachEntry(entry, index) {
+            entry.index = index;
             updateEntryProperties(
                 entry
             );
