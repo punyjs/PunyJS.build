@@ -10,13 +10,9 @@ function _RunServer(
     * @worker
     */
     return function RunServer(cmdArgs) {
-
+        //start the server listening
         return $route$_server.listen(
-
-        )
-        .then(function thenListening() {
-            
-        });
-
+            cmdArgs
+        );
     };
 }
