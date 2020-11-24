@@ -267,11 +267,11 @@ function _Server(
             }
             else {
                 //if there is a lastPort
-                if (!is_nill(lasPort)) {
-                    appConfig.port = ++lasPort;
+                if (!is_nill(lastPort)) {
+                    appConfig.port = ++lastPort;
                 }
                 else {
-                    appConfig.port = lasPort = serverConfig.port;
+                    appConfig.port = lastPort = serverConfig.port;
                 }
             }
         }
