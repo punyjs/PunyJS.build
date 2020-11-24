@@ -178,6 +178,18 @@ function _DependencyNotationMerger(
             if (entryA[0] === entryB[0]) {
                 return entryA;
             }
+            //if entryA has overwrite
+            if (is_object(entryA[1])) {
+                if (entryA[1].overwrite) {
+                    return entryB;
+                }
+            }
+            //if entryB has overwrite
+            if (is_object(entryB[1])) {
+                if (entryB[1].overwrite) {
+                    return entryA;
+                }
+            }
         }
 
         //nothing else can be merged
