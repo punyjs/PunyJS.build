@@ -1,5 +1,6 @@
 {
     "routeServerNamespace": "PunyJS.build.handlers.express.helpers._Server"
+    , "routeDtree": "{PunyJS.build.handlers.express.server}/dtree.json"
     , "config": {
         "routeBranchName": "$route$"
         , "routeKitName": "RouteKit.json"

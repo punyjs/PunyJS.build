@@ -5,7 +5,6 @@ function _ExpressInitializer(
     promise
     , is_array
     , buildHandlers_ioc_monolith_initialize
-    , buildHelpers_express_dependencies
     , utils_merge
     , defaults
     , errors
@@ -14,10 +13,6 @@ function _ExpressInitializer(
     * @alias
     */
     var moduleInitializer = buildHandlers_ioc_monolith_initialize
-    /**
-    * @alias
-    */
-    , dependencies = buildHelpers_express_dependencies
     ;
 
     /**
@@ -98,11 +93,13 @@ function _ExpressInitializer(
     */
     function addRouteDependencies(entry) {
         try {
-            entry[defaults.localDepTreePropertyName] =
-                utils_merge(
-                    entry[defaults.localDepTreePropertyName]
-                    , dependencies
-                );
+            //add the base entry for the route dtree
+            if (!entry.base) {
+                entry.base = [];
+            }
+            entry.base.push(
+                defaults.routeDtree
+            );
 
             return promise.resolve();
         }
