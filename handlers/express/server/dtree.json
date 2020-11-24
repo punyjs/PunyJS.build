@@ -41,5 +41,5 @@
         , "regexp": [":PunyJS.core.is.RegExp"]
         , "empty": [":PunyJS.core.is.Empty"]
     }]
-    , "$run$": [".$route$.runServer"]
+    , "$run$": [".$route$.runServer",{"overwrite":true}]
 }
