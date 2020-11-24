@@ -12,7 +12,7 @@ function _RunServer(
     return function RunServer(cmdArgs) {
         //start the server listening
         return $route$_server.listen(
-            cmdArgs
+            cmdArgs.arguments
         );
     };
 }
