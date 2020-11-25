@@ -181,13 +181,13 @@ function _DependencyNotationMerger(
         }
         //if entryA has overwrite
         if (is_object(entryA[1])) {
-            if (entryA[1].overwrite) {
+            if (entryA[1].allowOverwrite) {
                 return entryB;
             }
         }
         //if entryB has overwrite
         if (is_object(entryB[1])) {
-            if (entryB[1].overwrite) {
+            if (entryB[1].allowOverwrite) {
                 return entryA;
             }
         }
