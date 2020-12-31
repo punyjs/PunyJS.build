@@ -194,7 +194,7 @@ function _DependencyNotationMerger(
 
         //nothing else can be merged
         throw new Error(
-            `${errors.unable_merge} (${types})`
+            `${errors.unable_merge} (${types},${entryA[0]},${entryB[0]})`
         );
     }
     /**

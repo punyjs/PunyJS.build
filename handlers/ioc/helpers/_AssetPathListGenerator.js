@@ -65,6 +65,9 @@ function _AssetPathListGenerator(
         }
         //factory dependencies have a child factoryEntry that has the actual namespace
         else if (depEntry.type === "factory") {
+            if (depEntry.factoryEntry.type === "abstract") {
+                return;
+            }
             if (
                 !nsColl.hasOwnProperty(depEntry.factoryEntry.namespace)
             ) {
