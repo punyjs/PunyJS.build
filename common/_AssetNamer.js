@@ -147,7 +147,7 @@ function _AssetNamer(
             return name;
         }
 
-        suffix = ext.substring(1,1).toUpperCase() + ext.substring(2);
+        suffix = ext.substring(1,2).toUpperCase() + ext.substring(2);
 
         return `${name}${suffix}`;
     }
