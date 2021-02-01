@@ -124,7 +124,7 @@ function _AssetPathListGenerator(
         var match = ns.match(LAST_UPCASE_PATT);
         if (!!match) {
             if (Object.keys(defaults.extSuffixMap).indexOf(match[2]) !== -1) {
-                return `${match[1].replace(DOT_PATT, "/")}.${defaults.extSuffixMap[match[2]]}`
+                return `${match[1].replace(DOT_PATT, "/")}${defaults.extSuffixMap[match[2]]}`
             }
 
         }
