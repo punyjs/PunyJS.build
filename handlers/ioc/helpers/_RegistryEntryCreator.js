@@ -4,6 +4,7 @@
 */
 function _RegistryEntryCreator(
     is_empty
+    , is_string
     , encode
     , defaults
     , errors
@@ -18,6 +19,16 @@ function _RegistryEntryCreator(
     * @property
     */
     , LD_PATT = /[_]/g
+    /**
+    * A regexp pattern for replacing double quotes
+    * @property
+    */
+    , QUOTE_PATT = /(?<![\\])["]/g
+    /**
+    * A regexp pattern for replacing new line characters
+    * @property
+    */
+    , NL_PATT = /\r?\n/g
     /**
     * An array of extensions that require base64 enconding
     * @property
@@ -58,7 +69,16 @@ function _RegistryEntryCreator(
         }
         //if not json we'll need to encapsulate it
         else if (asset.path.ext !== ".json") {
-            value = `"${value}"`;
+            if (is_string(value)) {
+                //escape quotes
+                value = value.replace(QUOTE_PATT, "\\\"");
+                //handle new line
+                value = value.replace(NL_PATT, " \\\r\n");
+                value = `"${value}"`;
+            }
+            else {
+                value = `${value}`;
+            }
         }
 
         return {
