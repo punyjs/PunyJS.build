@@ -4,6 +4,8 @@
 */
 function _RegistryEntryCreator(
     is_empty
+    , encode
+    , defaults
     , errors
 ) {
     /**
@@ -16,6 +18,11 @@ function _RegistryEntryCreator(
     * @property
     */
     , LD_PATT = /[_]/g
+    /**
+    * An array of extensions that require base64 enconding
+    * @property
+    */
+    , base64Exts = Object.keys(defaults.base64EncodeMap)
     ;
 
     /**
@@ -42,6 +49,12 @@ function _RegistryEntryCreator(
                     };
                 }
             }
+        }
+        //see if this is
+        else if (base64Exts.indexOf(asset.path.ext) !== -1) {
+            value = base64EncodeValue(
+                asset
+            );
         }
         //if not json we'll need to encapsulate it
         else if (asset.path.ext !== ".json") {
@@ -71,5 +84,16 @@ function _RegistryEntryCreator(
             }
             return depEntry;
         });
+    }
+    /**n
+    * @function
+    */
+    function base64EncodeValue(asset) {
+        var mimeType = defaults.base64EncodeMap[asset.path.ext]
+        , encodedData = encode.toBase64(
+            asset.data
+        );
+
+        return `"data:${mimeType};base64,${encodedData}"`;
     }
 }

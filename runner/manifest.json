@@ -43,6 +43,8 @@
                 , "{PunyJS.build.handlers.express}/build-handler.dtree.json"
                 , "{PunyJS.build.handlers.test}/build-handler.dtree.json"
                 , "{PunyJS.build.handlers.bootstrap}/build-handler.dtree.json"
+                , "{PunyJS.core.encoding}/dtree.json"
+                , "{PunyJS.core.encoding}/node.dtree.json"
             ]
             , "config": {
                 "dtreeFileName": "${appDtreeFileName}"
