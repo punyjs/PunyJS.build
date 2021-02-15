@@ -179,6 +179,25 @@ function _DependencyNotationMerger(
                 return entryA;
             }
         }
+        //if both are methods and have the same method name and binding
+        if (types === "method,method") {
+            //target and method are the same
+            if (entryA[0] === entryB[0] && entryA[1] === entryB[1]) {
+                if (is_object(entryA[2]) && is_object(entryB[2])) {
+                    //check the object structure
+                    if (
+                        JSON.stringify(entryA[2]) === JSON.stringify(entryB[2])
+                    ) {
+                        return entryB;
+                    }
+                }
+                //options are both undefined or null
+                else if (entryA[2] === entryB[2]) {
+                    return entryB;
+                }
+            }
+        }
+
         //if entryA has overwrite
         if (is_object(entryA[1])) {
             if (entryA[1].allowOverwrite) {
