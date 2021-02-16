@@ -8,11 +8,7 @@ function setupApp(app) {
         var extendendGlobal = Object.create(
             global
             , {
-                "$controller": {
-                    "enumerable": true
-                    , "value": app.controller.resolve
-                }
-                , "require": {
+                "require": {
                     "enumerable": true
                     , "value": require
                 }
