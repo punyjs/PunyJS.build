@@ -11,7 +11,12 @@ function _AssetPathListGenerator(
     * A reg exp pattern for replacing namespace dots
     * @property
     */
-    var DOT_PATT = /[.]/g
+    var DOT_PATT = /(?<![\\])[.]/g
+    /**
+    * A reg exp pattern for replacing back slashes
+    * @property
+    */
+    , ESC_DOT_PATT = /[\\][.]/g
     /**
     * A reg exp pattern for replacing back slashes
     * @property
@@ -120,15 +125,24 @@ function _AssetPathListGenerator(
     * @function
     */
     function getNsPath(ns) {
-        //get the last capitalized word
-        var match = ns.match(LAST_UPCASE_PATT);
+        //get the last capitalized word and use it
+        var match = ns.match(LAST_UPCASE_PATT), path, suffix;
         if (!!match) {
-            if (Object.keys(defaults.extSuffixMap).indexOf(match[2]) !== -1) {
-                return `${match[1].replace(DOT_PATT, "/")}${defaults.extSuffixMap[match[2]]}`
-            }
+            suffix = defaults.extSuffixMap[match[2]];
+            if (!!suffix) {
+                path = match[1].replace(DOT_PATT, "/");
 
+            }
+        }
+        //use the default suffix if there wasn't a match
+        if (!path) {
+            path = ns.replace(DOT_PATT, "/");
+            suffix = ".<js(?:on)?>";
         }
 
-        return ns.replace(DOT_PATT, "/") + ".<js(?:on)?>";
+        //replace any escaped dots with dots
+        path = path.replace(ESC_DOT_PATT, ".");
+
+        return `${path}${suffix}`;
     }
 }
